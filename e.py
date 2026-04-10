@@ -34,15 +34,15 @@ def bs_e(a: int, b: int):
     if a == b:
         return mpz(1), mpz(a)
     m = (a + b) // 2
-    p1, q1 = bs_e(a, m)
-    p2, q2 = bs_e(m + 1, b)
-    return p1 * q2 + p2, q1 * q2
+    P1, Q1 = bs_e(a, m)
+    P2, Q2 = bs_e(m + 1, b)
+    return P1 * Q2 + P2, Q1 * Q2
 
 def compute_e(bits: int) -> mpfr:
     """Computes e to the given number of significant bits, using the Taylor series."""
     t = terms_needed(bits)
-    p, q = bs_e(1, t) # p/q = 1/1! + 1/2! + ... + 1/t!
-    return mpfr(1) + mpfr(p) / mpfr(q)
+    P, Q = bs_e(1, t) # p/q = 1/1! + 1/2! + ... + 1/t!
+    return mpfr(1) + mpfr(P) / mpfr(Q)
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:

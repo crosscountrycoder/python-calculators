@@ -17,5 +17,5 @@ for i in range(num_points):
     if x**2 + y**2 <= 1:
         inside_circle += 1
 
-pct_inside_circle = inside_circle / num_points
-print(pct_inside_circle * 4)
+est_pi = 4 * inside_circle / num_points
+print(est_pi)
