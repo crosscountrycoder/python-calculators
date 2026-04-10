@@ -10,7 +10,6 @@ import sys
 import helpers
 from gmpy2 import mpfr, mpz, get_context, sqrt
 from time import perf_counter
-from typing import Any
 
 A = mpz(13591409)
 B = mpz(545140134)

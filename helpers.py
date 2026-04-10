@@ -1,5 +1,4 @@
 from math import ceil, floor, log2
-from gmpy2 import mpfr
 
 def bits_needed(digits: int) -> int:
     """Number of bits needed to return a given number of decimal digits.
