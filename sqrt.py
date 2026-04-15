@@ -1,14 +1,15 @@
 """
 Calculates the square root of an integer using Newton's method.
 Examples:
-python sqrt.py 2 30 - Prints sqrt(2) to 30 decimal digits of precision (after the decimal point)
-python sqrt.py 3 1000000 write - Writes a file, sqrt3_1000000.txt, with 1 million digits of sqrt(3) after the decimal point.
+python3 sqrt.py 2 30 - Prints sqrt(2) to 30 decimal digits of precision (after the decimal point)
+python3 sqrt.py 3 1000000 write - Writes a file, sqrt3_1000000.txt, with 1 million digits of sqrt(3) after the decimal point.
 Using the write option, each line contains 100 decimal digits.
 """
 import sys
 import helpers
 from gmpy2 import mpfr, mpz, get_context
 from time import perf_counter
+from math import isqrt
 
 def squareRoot(n: int, bits: int) -> mpfr:
     if n < 0:
@@ -17,23 +18,19 @@ def squareRoot(n: int, bits: int) -> mpfr:
         return mpfr(n)
     
     # Find integer square root (initial guess)
-    log2_sqrt = (n.bit_length() - 1) // 2
-    i0 = 2 ** (log2_sqrt + 1)
-    i1 = (i0 + n // i0) // 2
-    while i1 < i0:
-        i0 = i1
-        i1 = (i0 + n // i0) // 2
-    if i0 ** 2 == n: # if n is a perfect square
-        return mpfr(i0)
+    int_sqrt = isqrt(n)
+    if int_sqrt ** 2 == n: # if n is a perfect square
+        return mpfr(int_sqrt)
     
     # If n is not a perfect square, find the square root to given precision
-    p = mpz(i0) + 1
+    n_mpz = mpz(n)
+    p = mpz(int_sqrt) + 1
     q = mpz(1)
-    e = log2_sqrt # error bound: abs(p/q-sqrt(n)) / sqrt(n) < 2**-e
+    e = (n.bit_length() - 1) // 2 # error bound: abs(p/q-sqrt(n)) / sqrt(n) < 2**-e
     while e < bits:
         p0 = p
         q0 = q
-        p = p0 ** 2 + n * q0 ** 2
+        p = p0 ** 2 + n_mpz * q0 ** 2
         q = 2 * p0 * q0
         e = 2 * e + 1
     return mpfr(p) / mpfr(q)

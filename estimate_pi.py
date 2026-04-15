@@ -3,7 +3,7 @@ Estimates pi using a Monte Carlo method: Generate random points on the xy-plane,
 coordinates uniformly distributed in the range [0, 1), then count the fraction of the points that
 are within the unit circle x^2 + y^2 <= 1. The estimated value of pi is this fraction multiplied
 by 4.
-Syntax: python estimate-pi.py <number of points>
+Syntax: python3 estimate-pi.py <number of points>
 """
 
 import random

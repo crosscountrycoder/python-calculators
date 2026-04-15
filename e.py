@@ -1,9 +1,9 @@
 """
 Calculates e using its Taylor series: e = Σ(n=0..inf, 1/n!) = 1/0! + 1/1! + 1/2! + 1/3! + ...
 Examples:
-python e.py 30 - Prints e to 30 decimal digits of precision (after the decimal point)
-python e.py 10000 - Prints e to 10000 decimal digits
-python e.py 1000000 write - Writes a file, e_1000000.txt, with 1 million digits of e after the decimal point.
+python3 e.py 30 - Prints e to 30 decimal digits of precision (after the decimal point)
+python3 e.py 10000 - Prints e to 10000 decimal digits
+python3 e.py 1000000 write - Writes a file, e_1000000.txt, with 1 million digits of e after the decimal point.
 Using the write option, each line contains 100 decimal digits.
 """
 import sys

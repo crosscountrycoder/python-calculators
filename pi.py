@@ -1,9 +1,9 @@
 """
 Calculates pi using the Chudnovsky algorithm with binary splitting.
 Examples:
-python pi.py 30 - Prints pi to 30 decimal digits of precision (after the decimal point)
-python pi.py 10000 - Prints pi to 10000 decimal digits
-python pi.py 1000000 write - Writes a file, pi_1000000.txt, with 1 million digits of pi after the decimal point.
+python3 pi.py 30 - Prints pi to 30 decimal digits of precision (after the decimal point)
+python3 pi.py 10000 - Prints pi to 10000 decimal digits
+python3 pi.py 1000000 write - Writes a file, pi_1000000.txt, with 1 million digits of pi after the decimal point.
 Using the write option, each line contains 100 decimal digits.
 """
 import sys
