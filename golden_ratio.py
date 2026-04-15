@@ -11,14 +11,16 @@ from gmpy2 import mpfr, mpz, get_context
 from time import perf_counter
 
 def calc_golden_ratio(bits: int) -> mpfr:
-    p = mpz(3)
-    q = mpz(1)
-    mpz_5 = mpz(5)
-    e = 1
+    """Calculates the golden ratio by first calculating sqrt(5) using Newton's method (aka Heron's or Babylonian method), then 
+    adding 1 and dividing by 2."""
+    MPZ_5 = mpz(5) # constant
+    p = mpz(3) # numerator
+    q = mpz(1) # denominator
+    e = 1 # relative error bound (<= 2^-e)
     while e < bits:
         p0 = p
         q0 = q
-        p = p0 ** 2 + mpz_5 * q0 ** 2
+        p = p0 ** 2 + MPZ_5 * q0 ** 2
         q = 2 * p0 * q0
         e = 2 * e + 1
     return (mpfr(1) + mpfr(p) / mpfr(q)) / mpfr(2)
