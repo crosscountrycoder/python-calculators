@@ -16,7 +16,7 @@ B = mpz(545140134)
 C = mpz(640320)
 C3_OVER_24 = (C**3) // 24
 
-def bs(a: int, b: int):
+def bs(a: int, b: int) -> tuple[mpz, mpz, mpz]:
     """Binary splitting to calculate pi using Chudnovsky algorithm.
     P, Q, T = bs(0, n) calculates the Chudnovsky series to n terms. The value of pi is then 426880 * sqrt(10005) * Q / T.
     P, Q, T are returned as gmpy2.mpz values."""
@@ -27,7 +27,7 @@ def bs(a: int, b: int):
             a_mpz = mpz(a)
             P = (6*a_mpz-5) * (2*a_mpz-1) * (6*a_mpz-1)
             Q = a_mpz ** 3 * C3_OVER_24
-        T = (-1) ** a * P * (A + B * a)
+        T = (-1 if a % 2 else 1) * P * (A + B * a)
         return P, Q, T
 
     m = (a + b) // 2
@@ -60,8 +60,6 @@ if __name__ == "__main__":
     bits = helpers.bits_needed(num_digits)
     ctx = get_context().copy()
     ctx.precision = bits
-    ctx.emin = -2**47+1
-    ctx.emax = 2**47-1
     with ctx:
         pi = pi_chudnovsky(bits)
         pi_string = format(pi, f".{num_digits}Zf")

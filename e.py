@@ -1,5 +1,5 @@
 """
-Calculates e using its Taylor series: e = Σ(n=0, inf, 1/n!) = 1/0! + 1/1! + 1/2! + 1/3! + ...
+Calculates e using its Taylor series: e = Σ(n=0..inf, 1/n!) = 1/0! + 1/1! + 1/2! + 1/3! + ...
 Examples:
 python e.py 30 - Prints e to 30 decimal digits of precision (after the decimal point)
 python e.py 10000 - Prints e to 10000 decimal digits
@@ -12,24 +12,27 @@ from gmpy2 import mpfr, mpz, get_context
 from time import perf_counter
 from math import log
 
-def terms_needed(bits: int):
+def terms_needed(bits: int) -> int:
+    """Estimates the number of terms in the Taylor series needed to compute e to the given number of bits,
+    using Stirling's approximation. This value is always a slight overestimate, because Stirling's approximation
+    is a lower bound for n!."""
     if bits <= 1:
         return 2
     t = 1
-    while (t * (log(t) - 1)) / log(2) < bits:
+    while t * (log(t) - 1) / log(2) < bits:
         t *= 2
     t0 = t // 2
     while t - t0 >= 2:
         a = (t0 + t) // 2
-        if (a * (log(a) - 1)) / log(2) < bits:
+        if a * (log(a) - 1) / log(2) < bits:
             t0 = a
         else:
             t = a
     return t
 
-def bs_e(a: int, b: int):
+def bs_e(a: int, b: int) -> tuple[mpz, mpz]:
     """Binary splitting to calculate e using Taylor series.
-    Returns p, q such that Σ(x=a, b, 1/x!) = p / (q*(a-1)!) for integers a >= 1 and b >= a.
+    Returns p, q such that p/q = Σ(x=a..b, (a-1)!/x!) for integers a >= 1 and b >= a.
     If p, q = bs_e(1, t), then e is the limit of 1 + p/q as t approaches infinity."""
     if a == b:
         return mpz(1), mpz(a)
@@ -61,8 +64,6 @@ if __name__ == "__main__":
     bits = helpers.bits_needed(num_digits)
     ctx = get_context().copy()
     ctx.precision = bits
-    ctx.emin = -2**47+1
-    ctx.emax = 2**47-1
     with ctx:
         e = compute_e(bits)
         e_string = format(e, f".{num_digits}Zf")
