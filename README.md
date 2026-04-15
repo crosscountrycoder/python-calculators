@@ -27,10 +27,20 @@ Calculates the square root of a positive integer using
 - `python3 sqrt.py <n> <d>` prints sqrt(n) to d digits after the decimal point.
 - `python3 sqrt.py <n> <d> write` writes a text file containing d decimal digits of sqrt(n), with 100 digits per line.
 
-## estimate_pi.py ##
+### golden_ratio.py ###
+Calculates the golden ratio `(1 + sqrt(5)) / 2`, known as phi, also using Heron's method.
+- `python3 golden_ratio.py <d>` prints the golden ratio to d digits after the decimal point.
+- `python3 golden_ratio.py <n> <d> write` writes a text file containing d decimal digits of the golden ratio, with 100 digits per line.
+
+### estimate_pi.py ###
 Estimates pi by generating random numbers. For some positive integer n, generate n random ordered pairs `(x, y)` with each value 
 uniformly distributed in the range \[0, 1\). As n approaches infinity, the share of values that are in the circle `x^2 + y^2 <= 1`
 approaches pi/4.
+
+## Note ##
+Due to a [https://github.com/gmpy2/gmpy2/issues/692](bug) in gmpy2, these calculators do not work with precisions larger than about
+100 million decimal digits. To calculate higher precisions, install gmpy2 from the source, modifying `b/src/gmpy2_context.c` as
+shown in the linked issue.
 
 ## Coming soon ##
 - Calculate the golden ratio `(1 + sqrt(5)) / 2`
